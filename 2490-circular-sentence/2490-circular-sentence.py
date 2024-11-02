@@ -1,15 +1,14 @@
 class Solution:
     def isCircularSentence(self, sentence: str) -> bool:
-      words = sentence.split(' ')
-      if len(words) == 1:
-        return words[0][0] == words[0][-1]
-      i, j = 0, 1
-      
-      while i < len(words) and j <= len(words)-1:
-        last, first = words[i][-1], words[j][0]
-        if last != first:
+      words = sentence.split()
+
+      # Check the first and last characters of the first and last words
+      if words[0][0] != words[-1][-1]:
           return False
-        i += 1
-        j += 1
-      return words[0][0] == words [-1][-1]
-        
+
+      # Check that each word ends with the starting character of the next word
+      for i in range(len(words) - 1):
+          if words[i][-1] != words[i + 1][0]:
+              return False
+
+      return True
