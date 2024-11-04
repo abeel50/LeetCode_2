@@ -1,28 +1,27 @@
 class Solution:
-    def compressedString(self, word: str) -> str:
-      h = {}
+  def compressedString(self, word: str) -> str:
+      if not word:
+          return ""
+
       comp = []
+      count = 1
       prv = word[0]
-      
-      for c in word:
-        if c == prv:
-          if c in h:
-            h[c] = h[c] + 1
+
+      for c in word[1:]:
+          if c == prv:
+              count += 1
+              if count == 9:
+                  comp.append(f"{count}{prv}")
+                  count = 0
           else:
-            h[c] = 1
-          if h[c] == 9:
-            comp.append(str(h[c])+c)
-            h[c]= 0
-        else:
-          if h[prv] !=0 :
-            comp.append(str(h[prv])+prv)
-          h[prv]= 0
-          h[c] = 1
-        prv = c
-          
-      for k,v in h.items():
-        if v != 0:
-          comp.append(str(v)+k)
-      
-      return ''.join(x for x in comp)
+              if count > 0:
+                  comp.append(f"{count}{prv}")
+              prv = c
+              count = 1
+
+      if count > 0:
+          comp.append(f"{count}{prv}")
+
+      return ''.join(comp)
+
         
